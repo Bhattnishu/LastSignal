@@ -47,13 +47,19 @@ def description_similarity(description1, description2):
 
 def calculate_match_score(lost_report, found_report):
 
+    # Reject different categories immediately
+    if lost_report.category != found_report.category:
+        return {
+            'score': 0,
+            'reasons': []
+        }
+
     score = 0
     reasons = []
 
     # 1. Category: 20 points
-    if lost_report.category == found_report.category:
-        score += 20
-        reasons.append("Same item category")
+    score += 20
+    reasons.append("Same item category")
 
     # 2. Item name: 25 points
     name_score = text_similarity(

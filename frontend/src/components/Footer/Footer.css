@@ -1,0 +1,15 @@
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  color: #948aa0;
+  font-size: 12px;
+  margin-top: 85px;
+}
+
+@media (max-width: 650px) {
+  .site-footer {
+    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+  }
+}

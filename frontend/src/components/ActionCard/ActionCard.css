@@ -1,0 +1,53 @@
+.action-card {
+  padding: 32px;
+  background: #1c1726;
+  border: 1px solid #3a2b48;
+  border-radius: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s;
+}
+
+.action-card:hover {
+  transform: translateY(-3px);
+}
+
+.lost-card:hover {
+  border-color: #ff963d;
+}
+
+.found-card:hover {
+  border-color: #7fe0b0;
+}
+
+.card-icon {
+  font-size: 36px;
+}
+
+.action-card h2 {
+  font-family: "Creepster", cursive;
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 26px;
+  margin: 20px 0 10px;
+}
+
+.action-card p {
+  color: #b8adbf;
+  line-height: 1.7;
+  min-height: 55px;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-weight: 700;
+}
+
+.lost-card .card-link {
+  color: #ff963d;
+}
+
+.found-card .card-link {
+  color: #7fe0b0;
+}

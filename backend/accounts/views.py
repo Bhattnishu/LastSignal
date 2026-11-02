@@ -14,9 +14,16 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
-class MeView(generics.RetrieveAPIView):
+
+class MeView(generics.RetrieveUpdateAPIView):
 
     serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+class DeleteAccountView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self):

@@ -1,0 +1,107 @@
+
+.report-lost-page {
+    min-height: 100vh;
+    padding: 50px 20px;
+    background: #100d18;
+    color: #f8f5ff;
+    font-family: "Poppins", sans-serif;
+}
+
+.report-lost-container {
+    max-width: 700px;
+    margin: 0 auto;
+    
+}
+
+.report-lost-container h1 {
+    font-family: "Creepster", cursive;
+    font-weight: 400;
+    color: #ff963d;
+    margin-bottom: 12px;
+}
+
+.report-lost-container p {
+    color: #b8adbf;
+    font-family: "Creepster", cursive;
+}
+.report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+    padding: 30px;
+    background: #1c1726;
+    border: 1px solid #3a2b48;
+    border-radius: 12px;
+}
+
+.report-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f8f5ff;
+}
+.form-error {
+  color: #ff7777;
+  font-size: 14px;
+}
+
+.form-success {
+  color: #7fe0b0;
+  font-size: 14px;
+}
+.report-form input,
+.report-form select,
+.report-form textarea {
+    width: 100%;
+    padding: 12px;
+    background: #100d18;
+    color: #f8f5ff;
+    border: 1px solid #3a2b48;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.report-form input:focus,
+.report-form select:focus,
+.report-form textarea:focus {
+    outline: none;
+    border-color: #ff963d;
+}
+
+.report-form button {
+    padding: 14px;
+    margin-top: 12px;
+    background: #ff963d;
+    color: #100d18;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.report-form button:hover {
+    background: #e9822e;
+}
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #ff963d;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+.report-lost-footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px 30px;
+}
+@media (max-width: 600px) {
+    .report-form {
+        padding: 20px;
+    }
+}

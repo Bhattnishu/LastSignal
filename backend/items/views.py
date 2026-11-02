@@ -109,8 +109,9 @@ class ItemMatchesView(APIView):
         # Get all active found reports
         found_reports = ItemReport.objects.filter(
             report_type=ItemReport.ReportType.FOUND,
-            status=ItemReport.Status.ACTIVE
-        )
+            status=ItemReport.Status.ACTIVE,
+            category=lost_report.category
+        ).exclude(user=request.user)
 
         matches = []
 

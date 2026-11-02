@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from .models import ItemReport
-from .models import ItemReport, RecoveryRequest
 from .models import ItemReport, RecoveryRequest, ItemMatch
+
 
 class ItemReportSerializer(serializers.ModelSerializer):
 
@@ -103,6 +102,7 @@ class RecoveryRequestSerializer(serializers.ModelSerializer):
             )
 
         return data
+
     def validate_status(self, value):
         if value not in [
             RecoveryRequest.RequestStatus.ACCEPTED,
@@ -110,6 +110,7 @@ class RecoveryRequestSerializer(serializers.ModelSerializer):
         ]:
             raise serializers.ValidationError("Invalid response status.")
         return value
+
 
 class RecoveryRequestResponseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -125,6 +126,7 @@ class RecoveryRequestResponseSerializer(serializers.ModelSerializer):
                 "You can only accept or reject a recovery request."
             )
         return value
+
 
 class ItemMatchSerializer(serializers.ModelSerializer):
     lost_item_name = serializers.CharField(

@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Creepster&family=Poppins:wght@400;600;700&display=swap");
+
+.home-page {
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  background: #100d18;
+  color: #f8f5ff;
+}
+
+.home-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 100px 24px 30px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 55px;
+}
+
+.hero-label {
+  color: #ff963d;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.hero h1 {
+  font-family: "Creepster", cursive;
+  font-weight: 400;
+  font-size: 48px;
+  letter-spacing: 2px;
+  line-height: 1.15;
+  margin: 22px 0 15px;
+}
+
+.hero h1 span {
+  color: #ff963d;
+}
+
+.hero p {
+  color: #b8adbf;
+  font-size: 16px;
+}
+
+.action-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 650px) {
+  .home-container {
+    padding-top: 65px;
+  }
+
+  .action-cards {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,68 @@
+.navbar {
+  height: 75px;
+  padding: 0 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #33283e;
+}
+
+.logo {
+  font-family: "Creepster", cursive;
+  color: #ff963d;
+  font-size: 30px;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+}
+
+.nav-tagline {
+  color: #a99db5;
+  font-size: 13px;
+}
+
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-button {
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.login-btn {
+  color: #f8f5ff;
+  border: 1px solid #ff963d;
+}
+
+.signup-btn,
+.logout-btn {
+  background: #ff963d;
+  color: #100d18;
+  border: 1px solid #ff963d;
+}
+
+.nav-button:hover {
+  opacity: 0.85;
+}
+
+
+@media (max-Fwidth: 650px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .logo {
+    font-size: 25px;
+  }
+
+  .nav-tagline {
+    font-size: 11px;
+  }
+}

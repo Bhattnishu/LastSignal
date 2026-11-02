@@ -1,0 +1,82 @@
+.lost-results-page {
+  min-height: 100vh;
+  padding: 50px 20px;
+  background: #100d18;
+  color: #f8f5ff;
+  font-family: "Poppins", sans-serif;
+}
+
+.lost-results-container {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.lost-results-container h1 {
+  color: #ff963d;
+  margin: 24px 0 12px;
+}
+
+.lost-results-container > p {
+  color: #b8adbf;
+}
+
+.match-card {
+  margin-top: 24px;
+  padding: 22px;
+  background: #1c1726;
+  border: 1px solid #3a2b48;
+  border-radius: 14px;
+}
+
+.match-card h2 {
+  color: #ff963d;
+  margin-bottom: 14px;
+}
+
+.match-card p,
+.match-card li {
+  color: #d5ccdc;
+  margin-bottom: 8px;
+}
+
+.match-card ul {
+  padding-left: 22px;
+}
+
+.no-matches {
+  margin-top: 24px;
+  padding: 18px;
+  background: #1c1726;
+  border: 1px solid #3a2b48;
+  border-radius: 12px;
+}
+
+.investigation-link {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 12px 20px;
+  background: #ff963d;
+  color: #100d18;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.investigation-link:hover {
+  background: #ffad65;
+}
+
+.form-error {
+  color: #ff7777;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .lost-results-page {
+    padding: 30px 16px;
+  }
+
+  .match-card {
+    padding: 16px;
+  }
+}
