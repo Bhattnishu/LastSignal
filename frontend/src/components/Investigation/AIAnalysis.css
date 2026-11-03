@@ -1,0 +1,145 @@
+
+.ai-analysis {
+  margin-top: 30px;
+  padding: 24px;
+  background: #17121f;
+  border: 1px solid #49305f;
+  border-radius: 14px;
+  color: #f5efff;
+}
+
+.ai-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.ai-icon {
+  font-size: 28px;
+  color: #c084fc;
+}
+
+.ai-heading h2 {
+  margin: 0 0 7px;
+  color: #d8a5ff;
+  font-size: 23px;
+}
+
+.ai-heading p {
+  margin: 0;
+  color: #b9adca;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ai-generate-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #9333ea, #6d28d9);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.ai-generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px #9333ea55;
+}
+
+.ai-generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.analysis-result {
+  margin-top: 26px;
+  padding: 22px;
+  background: #100d18;
+  border: 1px solid #49305f;
+  border-radius: 12px;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #392747;
+}
+
+.result-label {
+  color: #b78be6;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.result-header h3 {
+  margin: 6px 0 0;
+  color: #f3e8ff;
+  font-size: 19px;
+}
+
+.source-badge {
+  padding: 7px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.source-badge.gemini {
+  background: #243c32;
+  color: #86efac;
+}
+
+.source-badge.fallback {
+  background: #382a19;
+  color: #fdba74;
+}
+
+.result-content {
+  padding: 18px 0;
+}
+
+.result-content p {
+  margin: 0;
+  color: #e2d8ee;
+  font-size: 14px;
+  line-height: 1.9;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.result-note {
+  display: flex;
+  gap: 9px;
+  padding-top: 14px;
+  border-top: 1px solid #392747;
+  color: #a99bb9;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.result-note span {
+  color: #c084fc;
+}
+
+@media (max-width: 600px) {
+  .ai-analysis {
+    padding: 17px;
+  }
+
+  .analysis-result {
+    padding: 15px;
+  }
+
+  .result-header h3 {
+    font-size: 17px;
+  }
+}

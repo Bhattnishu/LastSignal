@@ -1,23 +1,20 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
-from django.db.models import Q
-\
-from .models import ItemReport
-from .serializers import ItemReportSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .matching import calculate_match_score
-from .models import ItemReport, RecoveryRequest
-from .models import ItemReport, RecoveryRequest, ItemMatch
-from .serializers import ItemReportSerializer, RecoveryRequestSerializer
+from django.db.models import Q
+
+from .models import ItemReport, RecoveryRequest, ItemMatch, Notification
 from .serializers import (
     ItemReportSerializer,
     RecoveryRequestSerializer,
     ItemMatchSerializer,
     RecoveryRequestResponseSerializer,
+    NotificationSerializer,
 )
+from .matching import calculate_match_score
+
 
 class ItemReportCreateView(generics.CreateAPIView):
     queryset = ItemReport.objects.all()
@@ -53,7 +50,7 @@ class ItemReportCreateView(generics.CreateAPIView):
             result = calculate_match_score(lost_report, found_report)
 
             if result['score'] >= 20:
-                ItemMatch.objects.get_or_create(
+                match, created = ItemMatch.objects.get_or_create(
                     lost_report=lost_report,
                     found_report=found_report,
                     defaults={
@@ -61,6 +58,23 @@ class ItemReportCreateView(generics.CreateAPIView):
                         'reasons': result['reasons']
                     }
                 )
+
+                if not match.is_notified:
+                    Notification.objects.get_or_create(
+                        user=lost_report.user,
+                        match=match,
+                        defaults={
+                            'title': 'Possible match found!',
+                            'message': (
+                                f"Someone reported finding an item "
+                                f"that may match your lost {lost_report.item_name}."
+                            )
+                        }
+                    )
+
+                    match.is_notified = True
+                    match.save(update_fields=['is_notified'])
+
 
 class MyReportsView(generics.ListAPIView):
     serializer_class = ItemReportSerializer
@@ -72,14 +86,12 @@ class MyReportsView(generics.ListAPIView):
         )
 
 
-class MyReportDetailView(generics.RetrieveUpdateAPIView):
+class MyReportDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ItemReportSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return ItemReport.objects.filter(
-            user=self.request.user
-        )
+        return ItemReport.objects.filter(user=self.request.user)
 
 
 class FoundReportsView(generics.ListAPIView):
@@ -149,8 +161,36 @@ class RecoveryRequestCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(requester=self.request.user)
+        recovery_request = serializer.save(
+            requester=self.request.user
+        )
 
+        result = calculate_match_score(
+            recovery_request.lost_report,
+            recovery_request.found_report
+        )
+
+        match, created = ItemMatch.objects.get_or_create(
+            lost_report=recovery_request.lost_report,
+            found_report=recovery_request.found_report,
+            defaults={
+                'score': result['score'],
+                'reasons': result['reasons']
+            }
+        )
+
+        Notification.objects.get_or_create(
+            user=recovery_request.found_report.user,
+            match=match,
+            defaults={
+                'title': 'New Recovery Request!',
+                'message': (
+                    f'{self.request.user.name} has requested '
+                    f'recovery of your found '
+                    f'{recovery_request.found_report.item_name}.'
+                )
+            }
+        )
 
 class MySentRecoveryRequestsView(generics.ListAPIView):
     serializer_class = RecoveryRequestSerializer
@@ -186,6 +226,7 @@ class RecoveryRequestUpdateView(generics.UpdateAPIView):
     def perform_update(self, serializer):
         serializer.save()
 
+
 class MyMatchesView(generics.ListAPIView):
     serializer_class = ItemMatchSerializer
     permission_classes = [IsAuthenticated]
@@ -195,3 +236,36 @@ class MyMatchesView(generics.ListAPIView):
             Q(lost_report__user=self.request.user) |
             Q(found_report__user=self.request.user)
         ).select_related('lost_report', 'found_report')
+
+
+class MyNotificationsView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Notification.objects.filter(
+            user=self.request.user
+        ).select_related(
+            'match',
+            'match__lost_report',
+            'match__found_report'
+        )
+
+
+class NotificationMarkReadView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk):
+        notification = get_object_or_404(
+            Notification,
+            pk=pk,
+            user=request.user
+        )
+
+        notification.is_read = True
+        notification.save(update_fields=['is_read'])
+
+        return Response({
+            'message': 'Notification marked as read.',
+            'is_read': True
+        }, status=status.HTTP_200_OK)

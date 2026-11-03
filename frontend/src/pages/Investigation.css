@@ -1,0 +1,136 @@
+.investigation-page {
+    min-height: 100vh;
+    padding: 45px 20px;
+    color: #ffffff;
+}
+
+.investigation-container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.investigation-container h1 {
+    font-family: "Creepster", cursive;
+    font-size: 42px;
+    color: #ff963d;
+    margin: 30px 0 12px;
+}
+
+.investigation-container p {
+    color: #c4bdce;
+    line-height: 1.7;
+}
+
+.investigation-container .back-link {
+    color: #ff963d;
+    text-decoration: none;
+}
+
+.investigation-container .back-link:hover {
+    text-decoration: underline;
+}
+
+.timeline-section {
+    margin-top: 35px;
+    padding: 28px;
+    background: #1c1726;
+    border: 1px solid #3a2b48;
+    border-radius: 12px;
+}
+
+.timeline-section h2 {
+    color: #ff963d;
+    margin-top: 0;
+    font-size: 23px;
+}
+
+.timeline-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.timeline-form label {
+    color: #e5ddeb;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.timeline-form input,
+.timeline-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    background: #100d18;
+    border: 1px solid #493956;
+    border-radius: 7px;
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+
+.timeline-form input:focus,
+.timeline-form textarea:focus {
+    outline: none;
+    border-color: #ff963d;
+}
+
+.timeline-form button {
+    margin-top: 12px;
+    padding: 12px;
+    background: #ff963d;
+    color: #160f0a;
+    border: none;
+    border-radius: 7px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+}
+
+.timeline-form button:hover {
+    background: #ffad64;
+}
+.timeline-entries {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #493956;
+}
+
+.timeline-entries h2 {
+    color: #ff963d;
+    font-size: 23px;
+    margin-bottom: 20px;
+}
+
+.timeline-entry {
+    background: #100d18;
+    border: 1px solid #493956;
+    border-left: 4px solid #ff963d;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 15px;
+}
+
+.timeline-entry h3 {
+    color: #ffffff;
+    margin: 0 0 8px;
+}
+
+.timeline-entry p {
+    color: #c4bdce;
+    margin-bottom: 10px;
+}
+
+.timeline-entry small {
+    color: #ff963d;
+}
+@media (max-width: 600px) {
+    .investigation-container h1 {
+        font-size: 32px;
+    }
+
+    .timeline-section {
+        padding: 18px;
+    }
+}

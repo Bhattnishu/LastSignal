@@ -79,7 +79,7 @@ class ItemReport(models.Model):
 
     def __str__(self):
         return f"{self.get_report_type_display()}: {self.item_name}"
-        
+
 
 class RecoveryRequest(models.Model):
 
@@ -94,7 +94,21 @@ class RecoveryRequest(models.Model):
         on_delete=models.CASCADE,
         related_name='recovery_requests'
     )
+    response_message = models.TextField(blank=True)
 
+    contact_method = models.CharField(
+        max_length=10,
+        choices=[
+            ('PHONE', 'Phone'),
+            ('EMAIL', 'Email'),
+        ],
+        blank=True
+    )
+
+    contact_value = models.CharField(
+        max_length=254,
+        blank=True
+    )
     found_report = models.ForeignKey(
         ItemReport,
         on_delete=models.CASCADE,
@@ -132,6 +146,7 @@ class RecoveryRequest(models.Model):
     def __str__(self):
         return f"Recovery request #{self.id} - {self.status}"
 
+
 class ItemMatch(models.Model):
     lost_report = models.ForeignKey(
         ItemReport,
@@ -154,3 +169,31 @@ class ItemMatch(models.Model):
 
     def __str__(self):
         return f"Match: {self.lost_report.item_name} - {self.found_report.item_name}"
+
+
+class Notification(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='notifications'
+    )
+
+    match = models.ForeignKey(
+        ItemMatch,
+        on_delete=models.CASCADE,
+        related_name='notifications'
+    )
+
+    title = models.CharField(max_length=150)
+    message = models.TextField()
+
+    is_read = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.title} - {self.user.email}"

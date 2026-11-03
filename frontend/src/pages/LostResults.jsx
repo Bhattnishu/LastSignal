@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
@@ -7,8 +8,15 @@ import "./LostResults.css";
 
 function LostResults() {
   const { id } = useParams();
+
   const [results, setResults] = useState(null);
   const [error, setError] = useState("");
+  const [selectedMatch, setSelectedMatch] = useState(null);
+  const [message, setMessage] = useState("");
+  const [contactMethod, setContactMethod] = useState("PHONE");
+  const [contactValue, setContactValue] = useState("");
+  const [sending, setSending] = useState(false);
+  const [successId, setSuccessId] = useState(null);
 
   useEffect(() => {
     async function fetchMatches() {
@@ -22,6 +30,40 @@ function LostResults() {
 
     fetchMatches();
   }, [id]);
+
+  async function handleRecoveryRequest(event) {
+    event.preventDefault();
+
+    if (!selectedMatch || !message.trim() || !contactValue.trim()) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    setSending(true);
+    setError("");
+
+    try {
+      await apiRequest("/items/recovery-requests/", {
+        method: "POST",
+        body: JSON.stringify({
+          lost_report: Number(id),
+          found_report: selectedMatch.report.id,
+          message: message.trim(),
+          contact_method: contactMethod,
+          contact_value: contactValue.trim(),
+        }),
+      });
+
+      setSuccessId(selectedMatch.report.id);
+      setSelectedMatch(null);
+      setMessage("");
+      setContactValue("");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSending(false);
+    }
+  }
 
   return (
     <>
@@ -60,6 +102,25 @@ function LostResults() {
                   <li key={index}>{reason}</li>
                 ))}
               </ul>
+
+              {successId === match.report.id ? (
+                <p className="recovery-success">
+                  Your message and contact details have been sent!
+                </p>
+              ) : (
+                <button
+                  className="recovery-request-btn"
+                  onClick={() => {
+                    setSelectedMatch(match);
+                    setMessage("");
+                    setContactValue("");
+                    setContactMethod("PHONE");
+                    setError("");
+                  }}
+                >
+                  Contact Finder
+                </button>
+              )}
             </div>
           ))}
 
@@ -68,6 +129,72 @@ function LostResults() {
           </Link>
         </div>
       </main>
+
+      {selectedMatch && (
+        <div className="recovery-modal-overlay">
+          <div className="recovery-modal">
+            <h2>Contact Finder</h2>
+
+            <p>
+              Explain why you believe this {selectedMatch.report.item_name}
+               belongs to you and share your contact details.
+            </p>
+
+            <form onSubmit={handleRecoveryRequest}>
+              <textarea
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                placeholder="Explain why this item belongs to you..."
+                rows={4}
+                required
+              />
+
+              <select
+                value={contactMethod}
+                onChange={(event) => setContactMethod(event.target.value)}
+              >
+                <option value="PHONE">Phone Number</option>
+                <option value="EMAIL">Email Address</option>
+              </select>
+
+              <input
+                type={contactMethod === "EMAIL" ? "email" : "tel"}
+                value={contactValue}
+                onChange={(event) => setContactValue(event.target.value)}
+                placeholder={
+                  contactMethod === "EMAIL"
+                    ? "Your email address"
+                    : "Your phone number"
+                }
+                required
+              />
+
+              {error && <p className="form-error">{error}</p>}
+
+              <div className="recovery-modal-actions">
+                <button
+                  type="button"
+                  className="recovery-cancel-btn"
+                  onClick={() => {
+                    setSelectedMatch(null);
+                    setError("");
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  className="recovery-request-btn"
+                  disabled={sending || !message.trim() || !contactValue.trim()}
+                >
+                  {sending ? "Sending..." : "Send Details"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>

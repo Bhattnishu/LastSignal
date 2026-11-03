@@ -1,0 +1,39 @@
+
+.recovery-requests {
+  margin-top: 35px;
+}
+
+.recovery-requests h2 {
+  color: #14b8a6;
+  font-size: 22px;
+  margin: 28px 0 16px;
+}
+
+.recovery-requests .activity-card {
+  background: #111827;
+  border: 1px solid #263445;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.recovery-requests .activity-card h3 {
+  color: #f1f5f9;
+  margin-bottom: 14px;
+}
+
+.recovery-requests .activity-card p {
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin: 9px 0;
+  overflow-wrap: anywhere;
+}
+
+.recovery-requests .activity-card strong {
+  color: #14b8a6;
+}
+
+.recovery-requests > p {
+  color: #94a3b8;
+  margin-bottom: 18px;
+}

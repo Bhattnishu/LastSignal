@@ -7,6 +7,7 @@ import LostResults from "./pages/LostResults";
 import ReportFound from "./pages/ReportFound";
 import MyActivity from "./pages/MyActivity";
 import Profile from "./pages/Profile";
+import Investigation from "./pages/Investigation";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/my-activity" element={<MyActivity />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/investigation/:id" element={<Investigation />} />
     </Routes>
   );
 }

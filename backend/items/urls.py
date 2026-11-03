@@ -11,8 +11,10 @@ from .views import (
     RecoveryRequestCreateView,
     RecoveryRequestUpdateView,
     MyMatchesView,
+    MyNotificationsView,
+    NotificationMarkReadView,
 )
- 
+
 
 urlpatterns = [
     path('reports/', ItemReportCreateView.as_view(), name='create-report'),
@@ -49,4 +51,14 @@ urlpatterns = [
         name='recovery-request-respond'
     ),
     path('my-matches/', MyMatchesView.as_view(), name='my-matches'),
+    path(
+        'notifications/',
+        MyNotificationsView.as_view(),
+        name='my-notifications'
+    ),
+    path(
+        'notifications/<int:pk>/read/',
+        NotificationMarkReadView.as_view(),
+        name='notification-mark-read'
+    ),
 ]

@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { apiRequest } from "../services/api";
+import RecoveryRequests from "./RecoveryRequests";
 import "./MyActivity.css";
 
 function MyActivity() {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     async function fetchReports() {
@@ -26,6 +28,31 @@ function MyActivity() {
     fetchReports();
   }, []);
 
+  async function handleDelete(report) {
+    const confirmed = window.confirm(
+      `Are you sure you want to permanently delete your ${report.report_type.toLowerCase()} report for "${report.item_name}"?`
+    );
+
+    if (!confirmed) return;
+
+    setDeletingId(report.id);
+    setError("");
+
+    try {
+      await apiRequest(`/items/my-reports/${report.id}/`, {
+        method: "DELETE",
+      });
+
+      setReports((previous) =>
+        previous.filter((item) => item.id !== report.id)
+      );
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -37,45 +64,78 @@ function MyActivity() {
           </Link>
 
           <h1>My Activity</h1>
-          <p>Keep track of the items you have reported.</p>
-
-          {loading && <p>Loading your reports...</p>}
+          <p>Keep track of your reports and recovery requests.</p>
 
           {error && <p className="form-error">{error}</p>}
 
-          {!loading && !error && reports.length === 0 && (
-            <div className="activity-empty">
-              <h2>No activity yet</h2>
-              <p>Your lost and found reports will appear here.</p>
-            </div>
+          {loading ? (
+            <p>Loading your reports...</p>
+          ) : (
+            <>
+              <section className="activity-section">
+                <h2>My Reports</h2>
+
+                {reports.length === 0 ? (
+                  <div className="activity-empty">
+                    <p>You haven't submitted any reports yet.</p>
+                  </div>
+                ) : (
+                  <div className="activity-list">
+                    {reports.map((report) => (
+                      <article
+                        className="activity-card"
+                        key={report.id}
+                      >
+                        <div className="activity-card-header">
+                          <span
+                            className={`report-type ${report.report_type.toLowerCase()}`}
+                          >
+                            {report.report_type === "LOST"
+                              ? "Lost Item"
+                              : "Found Item"}
+                          </span>
+
+                          <span className="report-status">
+                            {report.status}
+                          </span>
+                        </div>
+
+                        <h2>{report.item_name}</h2>
+
+                        <p>Category: {report.category}</p>
+                        <p>
+                          Location: {report.location}, {report.city}
+                        </p>
+
+                        <small>
+                          Submitted:{" "}
+                          {new Date(
+                            report.created_at
+                          ).toLocaleDateString()}
+                        </small>
+
+                        <div className="activity-card-actions">
+                          <button
+                            className="delete-report-btn"
+                            onClick={() => handleDelete(report)}
+                            disabled={deletingId === report.id}
+                            title="Delete report"
+                          >
+                            🗑️{" "}
+                            {deletingId === report.id
+                              ? "Deleting..."
+                              : "Delete"}
+                          </button>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </section>
+
+              <RecoveryRequests />
+            </>
           )}
-
-          <div className="activity-list">
-            {reports.map((report) => (
-              <article className="activity-card" key={report.id}>
-                <div className="activity-card-header">
-                  <span
-                    className={`report-type ${report.report_type.toLowerCase()}`}
-                  >
-                    {report.report_type === "LOST" ? "Lost Item" : "Found Item"}
-                  </span>
-
-                  <span className="report-status">
-                    {report.status}
-                  </span>
-                </div>
-
-                <h2>{report.item_name}</h2>
-
-                <p>Category: {report.category}</p>
-                <p>Location: {report.location}, {report.city}</p>
-
-                <small>
-                  Submitted: {new Date(report.created_at).toLocaleDateString()}
-                </small>
-              </article>
-            ))}
-          </div>
         </div>
       </main>
 

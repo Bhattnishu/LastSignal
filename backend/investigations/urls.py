@@ -1,5 +1,14 @@
 from django.urls import path
-from .views import SuggestionUpdateView,InvestigationCreateView,InvestigationUpdateView, InvestigationSuggestionCreateView,TimelineEntryCreateView, MySuggestionsView,MyTimelineView
+from .views import (
+    SuggestionUpdateView,
+    InvestigationCreateView,
+    InvestigationUpdateView,
+    InvestigationSuggestionCreateView,
+    TimelineEntryCreateView,
+    MySuggestionsView,
+    MyTimelineView,
+    AIAnalysisView,
+)
 
 urlpatterns = [
     path('', InvestigationCreateView.as_view(), name='investigation-create'),
@@ -33,4 +42,5 @@ urlpatterns = [
         SuggestionUpdateView.as_view(),
         name='suggestion-update'
     ),
+    path('ai-analysis/', AIAnalysisView.as_view(), name='ai-analysis'),
 ]
