@@ -1,10 +1,11 @@
+import time
 
 from google import genai
 from django.conf import settings
 
 
 def generate_investigation_analysis(item, timeline):
-    """Generate an investigation analysis using Gemini."""
+    """Generate an investigation analysis using Gemini with retries."""
 
     client = genai.Client(
         api_key=settings.GEMINI_API_KEY
@@ -42,12 +43,45 @@ def generate_investigation_analysis(item, timeline):
     - Suggestions must be realistic and relevant.
     - Do not add greetings, introductions, next steps, or conclusions.
     """
-    response = client.models.generate_content(
-        model="gemini-3.5-flash-lite",
-        contents=prompt,
-    )
 
-    return response.text
+    max_attempts = 3
+
+    for attempt in range(max_attempts):
+        try:
+            response = client.models.generate_content(
+                model="gemini-3.5-flash-lite",
+                contents=prompt,
+            )
+
+            if response.text:
+                return response.text
+
+            raise ValueError("Gemini returned an empty response.")
+
+        except Exception as error:
+            error_message = str(error)
+
+            temporary_errors = (
+                "429", "500", "502", "503", "504"
+            )
+
+            is_temporary = any(
+                code in error_message
+                for code in temporary_errors
+            )
+
+            if not is_temporary or attempt == max_attempts - 1:
+                raise
+
+            wait_time = 2 * (attempt + 1)
+
+            print(
+                f"Gemini temporarily unavailable. "
+                f"Retrying in {wait_time} seconds "
+                f"(attempt {attempt + 1}/{max_attempts})."
+            )
+
+            time.sleep(wait_time)
 
 
 def generate_fallback_analysis(item, timeline):
