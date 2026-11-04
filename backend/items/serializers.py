@@ -145,16 +145,19 @@ class ItemMatchSerializer(serializers.ModelSerializer):
     found_item_name = serializers.CharField(
         source='found_report.item_name', read_only=True
     )
+    found_item_image = serializers.ImageField(
+        source='found_report.image', read_only=True
+    )
 
     class Meta:
         model = ItemMatch
         fields = [
             'id', 'lost_report', 'found_report',
             'lost_item_name', 'found_item_name',
+            'found_item_image',
             'score', 'reasons', 'created_at',
         ]
         read_only_fields = fields
-
 
 class NotificationSerializer(serializers.ModelSerializer):
     match_id = serializers.IntegerField(

@@ -20,7 +20,9 @@ function Navbar() {
 
     try {
       const data = await apiRequest("/items/notifications/");
-      setNotifications(data);
+      setNotifications(
+        Array.isArray(data) ? data : data.results || []
+      );
     } catch (error) {
       console.error("Could not load notifications:", error.message);
     }
@@ -31,6 +33,23 @@ function Navbar() {
       loadNotifications();
     }
   }, [isLoggedIn]);
+  useEffect(() => {
+    function handleNotificationsUpdated() {
+      loadNotifications();
+    }
+
+    window.addEventListener(
+      "notifications-updated",
+      handleNotificationsUpdated
+    );
+
+    return () => {
+      window.removeEventListener(
+        "notifications-updated",
+        handleNotificationsUpdated
+      );
+    };
+  }, []);
   useEffect(() => {
     function handleOutsideClick(event) {
       if (
@@ -67,7 +86,11 @@ function Navbar() {
 
       setShowNotifications(false);
 
-      navigate(`/report/lost/${notification.lost_report_id}/results`);
+      if (notification.title === "New Recovery Request!") {
+        navigate("/my-activity");
+      } else {
+        navigate(`/report/lost/${notification.lost_report_id}/results`);
+      }
     } catch (error) {
       console.error("Notification error:", error.message);
     }

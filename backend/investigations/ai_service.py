@@ -11,35 +11,39 @@ def generate_investigation_analysis(item, timeline):
     )
 
     prompt = f"""
-    You are an assistant helping people investigate lost items.
+    You are LastSignal, an AI assistant helping users find lost items.
 
-    LOST ITEM DETAILS:
-    Item: {item.item_name}
+    LOST ITEM:
+    Name: {item.item_name}
     Category: {item.category}
-    Brand: {item.brand or 'Not provided'}
-    Color: {item.color or 'Not provided'}
+    Brand: {item.brand or 'Unknown'}
+    Color: {item.color or 'Unknown'}
     Description: {item.description}
-    Last known location: {item.location}, {item.city}
+    Last location: {item.location}, {item.city}
 
-    JOURNEY TIMELINE:
+    TIMELINE:
     {timeline}
 
-    TASK:
-    1. Analyse the lost item details and timeline.
-    2. Suggest 3-5 plausible places where the user could check.
-    3. Explain why each place is worth checking.
-    4. Give practical next steps.
-    5. Mention any missing information that could help.
+    Give a SHORT investigation report using exactly these sections:
 
-    IMPORTANT:
+    1. POSSIBLE PLACES TO CHECK
+    Suggest 3-4 specific places.
+    Give one short reason for each place (maximum 20 words).
+
+    2. MISSING INFORMATION
+    Mention at most 2 useful details that could improve the investigation.
+
+    RULES:
+    - Maximum 130 words.
+    - Use simple language.
+    - Avoid repeating item details.
     - Never claim to know the exact location.
     - Do not assume theft or accuse anyone.
-    - Clearly describe suggestions as possibilities, not facts.
-    - Keep the response simple and helpful.
+    - Suggestions must be realistic and relevant.
+    - Do not add greetings, introductions, next steps, or conclusions.
     """
-
     response = client.models.generate_content(
-        model="gemini-3.8-flash",
+        model="gemini-3.5-flash-lite",
         contents=prompt,
     )
 

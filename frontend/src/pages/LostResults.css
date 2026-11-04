@@ -225,7 +225,14 @@
   gap: 12px;
   margin-top: 8px;
 }
-
+.matched-item-image {
+  width: 100%;
+  max-width: 280px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 12px 0;
+}
 
 @media (max-width: 600px) {
   .lost-results-page {
