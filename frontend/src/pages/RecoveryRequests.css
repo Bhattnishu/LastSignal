@@ -1,39 +1,56 @@
-
-.recovery-requests {
-  margin-top: 35px;
-}
-
-.recovery-requests h2 {
-  color: #14b8a6;
-  font-size: 22px;
-  margin: 28px 0 16px;
-}
-
-.recovery-requests .activity-card {
-  background: #111827;
-  border: 1px solid #263445;
+.recovery-compact-card {
+  margin-top: 12px;
+  padding: 16px 18px;
+  background: #1c1726;
+  border: 1px solid #3a2b48;
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 16px;
 }
 
-.recovery-requests .activity-card h3 {
-  color: #f1f5f9;
-  margin-bottom: 14px;
+.recovery-compact-card summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
 }
 
-.recovery-requests .activity-card p {
-  color: #cbd5e1;
-  line-height: 1.6;
-  margin: 9px 0;
+.recovery-compact-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.recovery-compact-card summary div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.recovery-compact-card summary strong {
+  color: #ff963d;
+}
+
+.recovery-compact-card summary span {
+  color: #b8adbf;
+  font-size: 13px;
+}
+
+.recovery-arrow {
+  font-size: 22px !important;
+  transition: transform 0.2s ease;
+}
+
+.recovery-compact-card[open] .recovery-arrow {
+  transform: rotate(180deg);
+}
+
+.recovery-card-details {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #3a2b48;
+}
+
+.recovery-card-details p {
+  color: #c4bacd;
+  margin-bottom: 10px;
   overflow-wrap: anywhere;
-}
-
-.recovery-requests .activity-card strong {
-  color: #14b8a6;
-}
-
-.recovery-requests > p {
-  color: #94a3b8;
-  margin-bottom: 18px;
 }

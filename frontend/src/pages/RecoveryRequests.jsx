@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { apiRequest } from "../services/api";
 import "./RecoveryRequests.css";
@@ -37,23 +36,23 @@ function RecoveryRequests() {
       )}
 
       {received.map((r) => (
-        <article className="activity-card" key={r.id}>
-          <h3>{r.found_item_name}</h3>
-          <p>From: {r.requester_name}</p>
-          <p>Lost item: {r.lost_item_name}</p>
+        <details className="recovery-compact-card" key={r.id}>
+          <summary>
+            <div>
+              <strong>{r.found_item_name}</strong>
+              <span>From: {r.requester_name}</span>
+            </div>
+            <span className="recovery-arrow">⌄</span>
+          </summary>
 
-          <p><strong>Message:</strong> {r.message}</p>
-
-          <p>
-            <strong>Contact method:</strong> {r.contact_method}
-          </p>
-
-          <p>
-            <strong>Contact details:</strong> {r.contact_value}
-          </p>
-
-          <p>You can now contact this person directly.</p>
-        </article>
+          <div className="recovery-card-details">
+            <p>Lost item: {r.lost_item_name}</p>
+            <p><strong>Message:</strong> {r.message}</p>
+            <p><strong>Contact method:</strong> {r.contact_method}</p>
+            <p><strong>Contact details:</strong> {r.contact_value}</p>
+            <p>You can now contact this person directly.</p>
+          </div>
+        </details>
       ))}
 
       <h2>Sent Recovery Messages</h2>
@@ -63,13 +62,21 @@ function RecoveryRequests() {
       )}
 
       {sent.map((r) => (
-        <article className="activity-card" key={r.id}>
-          <h3>{r.lost_item_name}</h3>
-          <p>Found item: {r.found_item_name}</p>
-          <p>Your message: {r.message}</p>
-          <p>Contact details shared: {r.contact_value}</p>
-          <p>Message sent successfully.</p>
-        </article>
+        <details className="recovery-compact-card" key={r.id}>
+          <summary>
+            <div>
+              <strong>{r.lost_item_name}</strong>
+              <span>Found item: {r.found_item_name}</span>
+            </div>
+            <span className="recovery-arrow">⌄</span>
+          </summary>
+
+          <div className="recovery-card-details">
+            <p>Your message: {r.message}</p>
+            <p>Contact details shared: {r.contact_value}</p>
+            <p>Message sent successfully.</p>
+          </div>
+        </details>
       ))}
     </section>
   );
