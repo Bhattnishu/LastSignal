@@ -1,14 +1,385 @@
-@import url("https://fonts.googleapis.com/css2?family=Creepster&family=Poppins:wght@400;600;700&display=swap");
-* {
-  box-sizing: border-box;
+/* ---------- Halloween tokens ---------- */
+.navbar {
+  /* aliases of the global tokens in index.css */
+  --night: var(--bg-primary);
+  --night-2: var(--bg-secondary);
+  --card: var(--bg-card);
+  --plum: var(--border-color);
+  --pumpkin: var(--accent-orange);
+  --pumpkin-soft: #ffb36b;
+  --bone: var(--text-primary);
+  --mist: var(--text-secondary);
+  /* navbar-only accents */
+  --slime: #7CFC4F;
+  --blood: #e0243a;
 }
 
-html,
-body,
-#root {
+/* ---------- Bar ---------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 32px;
+  background:
+    radial-gradient(ellipse 340px 120px at 6% 0%, rgba(255, 150, 61, 0.22), transparent 70%),
+    linear-gradient(180deg, var(--night-2), var(--night));
+  font-family: inherit;
+  color: var(--bone);
+  border-bottom: 2px solid var(--pumpkin);
+}
+
+/* Dripping edge under the bar: two layers of slime drips */
+.navbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 14px;
+  margin-top: 2px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 9px 0, var(--night) 8px, transparent 9px) 0 0 / 38px 14px repeat-x,
+    radial-gradient(circle at 7px 0, var(--night) 6px, transparent 7px) 19px 0 / 26px 10px repeat-x;
+  filter: drop-shadow(0 2px 0 var(--pumpkin));
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  font-family: "Creepster", "Poppins", cursive;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  color: var(--pumpkin);
+  text-decoration: none;
+  text-shadow:
+    0 0 6px rgba(255, 150, 61, 0.7),
+    0 0 18px rgba(255, 150, 61, 0.45),
+    2px 2px 0 #5c2a05;
+  animation: candle-flicker 5s infinite;
+  transition: color 0.2s ease;
+}
+
+.logo:hover {
+  color: var(--pumpkin-soft);
+}
+
+.logo:focus-visible {
+  outline: 2px dashed var(--slime);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+@keyframes candle-flicker {
+  0%, 100% { opacity: 1; }
+  41% { opacity: 1; }
+  42% { opacity: 0.55; }
+  43% { opacity: 1; }
+  45% { opacity: 0.7; }
+  46% { opacity: 1; }
+}
+
+/* ---------- Right side ---------- */
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- Buttons ---------- */
+.nav-button {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    background-color 0.18s ease, color 0.18s ease;
+}
+
+.nav-button:focus-visible,
+.notification-button:focus-visible,
+.notification-item:focus-visible {
+  outline: 2px dashed var(--slime);
+  outline-offset: 3px;
+}
+
+/* Ghost outline: My Activity, My Profile, Login */
+.login-btn {
+  color: var(--bone);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--plum);
+}
+
+.login-btn:hover {
+  color: var(--pumpkin-soft);
+  border-color: var(--pumpkin);
+  background: rgba(255, 150, 61, 0.1);
+  box-shadow: 0 0 14px rgba(255, 150, 61, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Solid pumpkin: Sign Up */
+.signup-btn {
+  color: #1a0a00;
+  background: linear-gradient(180deg, var(--pumpkin-soft), var(--pumpkin));
+  box-shadow: 0 4px 0 #b5611c, 0 0 18px rgba(255, 150, 61, 0.4);
+}
+
+.signup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #b5611c, 0 0 26px rgba(255, 150, 61, 0.6);
+}
+
+.signup-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #b5611c;
+}
+
+/* Logout: blood red */
+.logout-btn {
+  color: var(--bone);
+  background: transparent;
+  border-color: var(--blood);
+}
+
+.logout-btn:hover {
+  background: var(--blood);
+  box-shadow: 0 0 16px rgba(224, 36, 58, 0.55);
+  transform: translateY(-2px);
+}
+
+/* ---------- Notification bell ---------- */
+.notification-wrapper {
+  position: relative;
+}
+
+.notification-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  font-size: 1.25rem;
+  border-radius: 50%;
+  border: 2px solid var(--plum);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.notification-button:hover {
+  border-color: var(--slime);
+  box-shadow: 0 0 14px rgba(124, 252, 79, 0.4);
+  transform: translateY(-2px);
+}
+
+.notification-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0d2400;
+  background: var(--slime);
+  border-radius: 999px;
+  border: 2px solid var(--night);
+  box-shadow: 0 0 10px rgba(124, 252, 79, 0.7);
+}
+
+/* ---------- Dropdown ---------- */
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  right: 0;
+  width: 340px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 14px;
+  background: linear-gradient(180deg, var(--card), var(--night-2));
+  border: 2px solid var(--pumpkin);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 28px rgba(255, 150, 61, 0.25);
+  transform-origin: top right;
+  animation: dropdown-open 0.18s ease-out;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pumpkin) transparent;
+}
+
+/* little pointer toward the bell */
+.notification-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  right: 14px;
+  width: 14px;
+  height: 14px;
+  background: var(--card);
+  border-top: 2px solid var(--pumpkin);
+  border-left: 2px solid var(--pumpkin);
+  transform: rotate(45deg);
+}
+
+@keyframes dropdown-open {
+  from { opacity: 0; transform: scale(0.94) translateY(-6px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.notification-dropdown h3 {
+  margin: 0 0 12px;
+  padding-bottom: 10px;
+  font-family: "Creepster", "Poppins", cursive;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  color: var(--pumpkin);
+  border-bottom: 1px dashed rgba(255, 150, 61, 0.5);
+}
+
+.no-notifications {
   margin: 0;
-  padding: 0;
-  background: #100d18;
-}body {
-    font-family: "Poppins", sans-serif;
+  padding: 18px 8px;
+  text-align: center;
+  color: var(--mist);
+  font-size: 0.95rem;
+}
+
+/* ---------- Notification items ---------- */
+.notification-item {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 12px 14px;
+  text-align: left;
+  font-family: inherit;
+  color: var(--bone);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(185, 169, 214, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.notification-item:last-child {
+  margin-bottom: 0;
+}
+
+.notification-item strong {
+  display: block;
+  font-size: 0.95rem;
+  padding-right: 44px;
+}
+
+.notification-item p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--mist);
+}
+
+.notification-item:hover {
+  background: rgba(255, 150, 61, 0.12);
+  border-color: var(--pumpkin);
+  transform: translateX(-3px);
+}
+
+/* unread: glowing slime stripe */
+.notification-item.unread {
+  border-left: 4px solid var(--slime);
+  background: rgba(124, 252, 79, 0.07);
+}
+
+.notification-item.unread strong {
+  color: var(--slime);
+}
+
+/* read: faded like a ghost */
+.notification-item.read {
+  opacity: 0.6;
+}
+
+.notification-item.read:hover {
+  opacity: 1;
+}
+
+.unread-label {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  padding: 3px 9px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #0d2400;
+  background: var(--slime);
+  border-radius: 999px;
+}
+
+/* ---------- Tablet / mobile ---------- */
+@media (max-width: 720px) {
+  .navbar {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .logo {
+    font-size: 1.7rem;
+  }
+
+  .nav-auth {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .nav-button {
+    padding: 9px 14px;
+    font-size: 0.88rem;
+  }
+
+  /* dropdown becomes a centered panel so it never overflows the screen */
+  .notification-wrapper {
+    position: static;
+  }
+
+  .notification-dropdown {
+    position: fixed;
+    top: 120px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-height: 60vh;
+    transform-origin: top center;
+  }
+
+  .notification-dropdown::before {
+    display: none;
+  }
+}
+
+/* ---------- Respect reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .notification-dropdown {
+    animation: none;
+  }
+
+  .nav-button,
+  .notification-button,
+  .notification-item {
+    transition: none;
+  }
 }

@@ -1,56 +1,119 @@
+
+/* =========================================
+   RECOVERY REQUEST CARDS
+========================================= */
+
 .recovery-compact-card {
-  margin-top: 12px;
-  padding: 16px 18px;
-  background: #1c1726;
-  border: 1px solid #3a2b48;
-  border-radius: 12px;
+    margin-top: 14px;
+    padding: 18px 20px;
+    background: linear-gradient(
+        145deg,
+        rgba(37, 26, 50, .96),
+        rgba(25, 17, 33, .96)
+    );
+    border: 1px solid #493456;
+    border-radius: 13px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .2);
+    transition: border-color .25s, box-shadow .25s;
+}
+
+.recovery-compact-card:hover {
+    border-color: rgba(255, 150, 61, .65);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .3);
 }
 
 .recovery-compact-card summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    list-style: none;
 }
 
 .recovery-compact-card summary::-webkit-details-marker {
-  display: none;
+    display: none;
 }
 
 .recovery-compact-card summary div {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
 }
 
 .recovery-compact-card summary strong {
-  color: #ff963d;
+    color: #ffad64;
+    font-size: 15px;
+    overflow-wrap: anywhere;
 }
 
 .recovery-compact-card summary span {
-  color: #b8adbf;
-  font-size: 13px;
+    color: #c4b5d0;
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 .recovery-arrow {
-  font-size: 22px !important;
-  transition: transform 0.2s ease;
+    flex-shrink: 0;
+    color: #ff963d !important;
+    font-size: 23px !important;
+    transition: transform .25s ease;
 }
 
 .recovery-compact-card[open] .recovery-arrow {
-  transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
+/* EXPANDED DETAILS */
+
 .recovery-card-details {
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid #3a2b48;
+    margin-top: 17px;
+    padding-top: 16px;
+    border-top: 1px solid #493456;
+    animation: recoveryExpand .25s ease;
 }
 
 .recovery-card-details p {
-  color: #c4bacd;
-  margin-bottom: 10px;
-  overflow-wrap: anywhere;
+    margin: 0 0 11px;
+    color: #d0c4dc;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+@keyframes recoveryExpand {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    .recovery-compact-card {
+        padding: 15px;
+    }
+
+    .recovery-compact-card summary strong {
+        font-size: 14px;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    .recovery-compact-card,
+    .recovery-arrow {
+        transition: none;
+    }
+
+    .recovery-card-details {
+        animation: none;
+    }
 }

@@ -1,107 +1,273 @@
 
+/* =========================================
+   HAUNTED REPORT PAGES
+========================================= */
+
 .report-lost-page {
     min-height: 100vh;
-    padding: 50px 20px;
-    background: #100d18;
+    padding: 45px 20px 70px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     color: #f8f5ff;
     font-family: "Poppins", sans-serif;
+    background:
+        linear-gradient(135deg, rgba(13, 6, 23, 0.9), rgba(20, 10, 32, 0.78)),
+        url("/images/haunted-forest.png") center / cover fixed;
+}
+
+.report-lost-page::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 420px;
+    height: 420px;
+    top: 80px;
+    right: -160px;
+    border-radius: 50%;
+    background: rgba(155, 93, 229, 0.15);
+    filter: blur(90px);
+    pointer-events: none;
+}
+
+.report-lost-page::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 350px;
+    height: 350px;
+    bottom: 0;
+    left: -150px;
+    border-radius: 50%;
+    background: rgba(255, 120, 35, 0.12);
+    filter: blur(85px);
+    pointer-events: none;
 }
 
 .report-lost-container {
-    max-width: 700px;
+    max-width: 720px;
     margin: 0 auto;
-    
+    position: relative;
+    z-index: 1;
 }
+
+/* HEADER */
 
 .report-lost-container h1 {
     font-family: "Creepster", cursive;
+    font-size: clamp(42px, 6vw, 58px);
     font-weight: 400;
+    letter-spacing: 1px;
     color: #ff963d;
-    margin-bottom: 12px;
+    margin: 18px 0 12px;
+    text-shadow:
+        0 0 10px rgba(255, 150, 61, 0.55),
+        0 0 30px rgba(255, 100, 30, 0.25);
 }
 
-.report-lost-container p {
-    color: #b8adbf;
-    font-family: "Creepster", cursive;
+.report-lost-container > p {
+    color: #d0c2dc;
+    font-size: 14px;
+    line-height: 1.9;
+    max-width: 550px;
 }
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #ffad64;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: #ffffff;
+}
+
+/* FORM PANEL */
+
 .report-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 13px;
     margin-top: 30px;
-    padding: 30px;
-    background: #1c1726;
-    border: 1px solid #3a2b48;
-    border-radius: 12px;
+    padding: 34px;
+    position: relative;
+    background: linear-gradient(
+        145deg,
+        rgba(35, 22, 49, 0.94),
+        rgba(17, 10, 27, 0.96)
+    );
+    border: 1px solid rgba(181, 116, 222, 0.42);
+    border-radius: 20px;
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.48),
+        0 0 35px rgba(126, 62, 165, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+}
+
+.report-form::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #9b5de5,
+        #ff963d,
+        transparent
+    );
+    box-shadow: 0 0 15px rgba(255, 150, 61, 0.45);
 }
 
 .report-form label {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    color: #f8f5ff;
-}
-.form-error {
-  color: #ff7777;
-  font-size: 14px;
+    color: #eadcf5;
+    margin-top: 5px;
 }
 
-.form-success {
-  color: #7fe0b0;
-  font-size: 14px;
-}
+/* INPUTS */
+
 .report-form input,
 .report-form select,
 .report-form textarea {
     width: 100%;
-    padding: 12px;
-    background: #100d18;
+    padding: 14px 15px;
+    background: rgba(12, 7, 19, 0.9);
     color: #f8f5ff;
-    border: 1px solid #3a2b48;
-    border-radius: 6px;
-    font-family: inherit;
-    font-size: 14px;
+    border: 1px solid #493653;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+.report-form input::placeholder,
+.report-form textarea::placeholder {
+    color: #81748d;
 }
 
 .report-form input:focus,
 .report-form select:focus,
 .report-form textarea:focus {
     outline: none;
+    background: #170e22;
     border-color: #ff963d;
+    box-shadow: 0 0 0 3px rgba(255, 150, 61, 0.12),
+                0 0 15px rgba(255, 150, 61, 0.08);
 }
 
-.report-form button {
-    padding: 14px;
-    margin-top: 12px;
-    background: #ff963d;
-    color: #100d18;
-    border: none;
-    border-radius: 6px;
-    font-size: 15px;
-    font-weight: 700;
+.report-form textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.report-form select {
     cursor: pointer;
 }
 
-.report-form button:hover {
-    background: #e9822e;
-}
-.back-link {
-    display: inline-block;
-    margin-bottom: 25px;
-    color: #ff963d;
-    text-decoration: none;
-    font-size: 14px;
+.report-form select option {
+    background: #1c1726;
+    color: #ffffff;
 }
 
-.back-link:hover {
-    text-decoration: underline;
+/* FILE INPUT */
+
+.report-form input[type="file"] {
+    padding: 10px;
+    cursor: pointer;
 }
+
+.report-form input[type="file"]::file-selector-button {
+    background: #392544;
+    color: #f8f5ff;
+    border: 1px solid #80539b;
+    border-radius: 7px;
+    padding: 8px 13px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+/* SUBMIT BUTTON */
+
+.report-form button {
+    padding: 15px;
+    margin-top: 15px;
+    background: linear-gradient(110deg, #ff963d, #ffb15f, #e87929);
+    background-size: 200% auto;
+    color: #1a0e08;
+    border: none;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(255, 126, 39, 0.2);
+    transition: transform 0.25s, box-shadow 0.25s, background-position 0.3s;
+}
+
+.report-form button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    background-position: right center;
+    box-shadow: 0 8px 25px rgba(255, 126, 39, 0.4);
+}
+
+.report-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* STATUS MESSAGES */
+
+.form-error {
+    color: #ff8585;
+    font-size: 13px;
+}
+
+.form-success {
+    color: #83e6b4;
+    font-size: 13px;
+}
+
+/* FOOTER */
+
 .report-lost-footer-container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 24px 30px;
 }
+
+/* RESPONSIVE */
+
 @media (max-width: 600px) {
+    .report-lost-page {
+        padding: 30px 15px 45px;
+        background-attachment: scroll;
+    }
+
+    .report-lost-container h1 {
+        font-size: 42px;
+    }
+
     .report-form {
-        padding: 20px;
+        padding: 23px 17px;
+        border-radius: 15px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .back-link,
+    .report-form input,
+    .report-form select,
+    .report-form textarea,
+    .report-form button {
+        transition: none;
     }
 }

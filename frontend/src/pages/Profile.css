@@ -1,72 +1,109 @@
 
+/* =========================================
+   HAUNTED PROFILE PAGE
+========================================= */
+
 .profile-page {
     min-height: 70vh;
-    padding: 50px 20px;
-    background: #100d18;
+    padding: 55px 20px 70px;
+    position: relative;
+    isolation: isolate;
     color: #f8f5ff;
     font-family: "Poppins", sans-serif;
+    background:
+        radial-gradient(ellipse at 85% 10%, rgba(155, 93, 229, 0.14), transparent 40%),
+        radial-gradient(ellipse at 10% 90%, rgba(255, 150, 61, 0.08), transparent 35%),
+        #100b18;
 }
 
 .profile-container {
-    max-width: 650px;
+    max-width: 680px;
     margin: 0 auto;
-    padding: 30px;
-    background: #1c1726;
-    border: 1px solid #3a2b48;
-    border-radius: 12px;
+    padding: 35px;
+    background: linear-gradient(
+        145deg,
+        rgba(35, 22, 49, 0.96),
+        rgba(20, 13, 29, 0.96)
+    );
+    border: 1px solid rgba(155, 93, 229, 0.4);
+    border-radius: 18px;
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(155, 93, 229, 0.08);
 }
+
+/* HEADING */
 
 .profile-container h1 {
+    font-family: "Creepster", cursive;
+    font-size: 46px;
+    font-weight: 400;
+    letter-spacing: 1px;
     color: #ff963d;
-    margin-bottom: 30px;
+    margin: 0 0 32px;
+    text-shadow: 0 0 18px rgba(255, 150, 61, 0.3);
 }
 
+/* PROFILE FIELDS */
+
 .profile-field {
-    margin-bottom: 22px;
+    margin-bottom: 24px;
 }
 
 .profile-field label {
     display: block;
-    color: #ff963d;
+    color: #ffad64;
+    font-size: 13px;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 9px;
 }
 
 .profile-field p {
-    color: #d8d0e0;
+    color: #e0d5e9;
     margin: 0;
+    padding: 12px 14px;
+    background: rgba(12, 7, 19, 0.65);
+    border: 1px solid #392943;
+    border-radius: 9px;
+    font-size: 14px;
 }
 
 .profile-field input {
     width: 100%;
-    padding: 12px;
-    background: #100d18;
-    border: 1px solid #3a2b48;
-    border-radius: 7px;
+    padding: 13px 14px;
+    background: #100b18;
+    border: 1px solid #493956;
+    border-radius: 9px;
     color: #f8f5ff;
     font-family: "Poppins", sans-serif;
     font-size: 14px;
     outline: none;
     box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .profile-field input:focus {
     border-color: #ff963d;
+    box-shadow: 0 0 0 3px rgba(255, 150, 61, 0.1);
 }
+
+/* BUTTONS */
 
 .profile-container button {
-    padding: 11px 20px;
-    background: #ff963d;
-    color: #100d18;
+    padding: 12px 22px;
+    background: linear-gradient(135deg, #ff963d, #e87929);
+    color: #170e08;
     border: none;
-    border-radius: 7px;
-    font-weight: 600;
+    border-radius: 8px;
+    font-weight: 700;
     cursor: pointer;
     font-family: "Poppins", sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.profile-container button:hover {
-    opacity: 0.9;
+.profile-container button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 16px rgba(255, 150, 61, 0.25);
 }
 
 .profile-container button:disabled {
@@ -80,36 +117,59 @@
 }
 
 .profile-actions button:last-child {
-    background: #3a2b48;
+    background: #392544;
     color: #f8f5ff;
+    border: 1px solid #69447f;
 }
+
+/* DELETE ACCOUNT */
+
 .delete-account-section {
-    margin-top: 35px;
+    margin-top: 38px;
     padding-top: 25px;
-    border-top: 1px solid #3a2b48;
+    border-top: 1px solid #493456;
 }
 
 .delete-account-btn {
     background: transparent !important;
-    color: #ff6b6b !important;
+    color: #ff7777 !important;
     border: 1px solid #a83d48 !important;
-    padding: 10px 18px;
-    border-radius: 7px;
+    padding: 11px 18px;
+    border-radius: 8px;
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-    transition: 0.2s ease;
+    transition: background 0.2s, color 0.2s;
 }
 
 .delete-account-btn:hover {
     background: #a83d48 !important;
     color: #ffffff !important;
 }
+
+/* RESPONSIVE */
+
 @media (max-width: 600px) {
+    .profile-page {
+        padding: 35px 15px 50px;
+    }
+
     .profile-container {
-        padding: 22px;
+        padding: 23px 18px;
+    }
+
+    .profile-container h1 {
+        font-size: 38px;
     }
 
     .profile-actions {
         flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-container button,
+    .profile-field input,
+    .delete-account-btn {
+        transition: none;
     }
 }

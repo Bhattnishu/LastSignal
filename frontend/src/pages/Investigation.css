@@ -1,48 +1,102 @@
+
+/* =========================================
+   INVESTIGATION PAGE
+========================================= */
+
 .investigation-page {
     min-height: 100vh;
-    padding: 45px 20px;
-    color: #ffffff;
+    padding: 45px 20px 70px;
+    position: relative;
+    isolation: isolate;
+    color: #f8f5ff;
+    font-family: "Poppins", sans-serif;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10, 5, 20, .45),
+            rgba(10, 5, 20, .78)
+        ),
+        url("/images/haunted-forest.png") center / cover no-repeat fixed;
 }
 
 .investigation-container {
+    width: 100%;
     max-width: 850px;
     margin: 0 auto;
 }
 
-.investigation-container h1 {
-    font-family: "Creepster", cursive;
-    font-size: 42px;
-    color: #ff963d;
-    margin: 30px 0 12px;
-}
-
-.investigation-container p {
-    color: #c4bdce;
-    line-height: 1.7;
-}
+/* =========================================
+   PAGE HEADER
+========================================= */
 
 .investigation-container .back-link {
-    color: #ff963d;
+    display: inline-block;
+    color: #ffad64;
     text-decoration: none;
+    font-size: 14px;
+    transition: color .2s ease;
 }
 
 .investigation-container .back-link:hover {
+    color: #fff;
     text-decoration: underline;
 }
 
+.investigation-container h1 {
+    font-family: "Creepster", cursive;
+    font-size: 50px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #ff963d;
+    margin: 30px 0 12px;
+    text-shadow: 0 0 18px rgba(255, 150, 61, .4);
+}
+
+.investigation-container > p {
+    color: #ded1e9;
+    line-height: 1.8;
+    max-width: 700px;
+    font-size: 14px;
+}
+
+/* =========================================
+   TIMELINE PANEL
+========================================= */
+
 .timeline-section {
     margin-top: 35px;
-    padding: 28px;
-    background: #1c1726;
-    border: 1px solid #3a2b48;
-    border-radius: 12px;
+    padding: 30px;
+    background: linear-gradient(
+        145deg,
+        rgba(35, 22, 49, .94),
+        rgba(18, 11, 27, .96)
+    );
+    border: 1px solid rgba(155, 93, 229, .45);
+    border-radius: 18px;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, .4),
+        0 0 25px rgba(155, 93, 229, .08);
+    backdrop-filter: blur(11px);
+    -webkit-backdrop-filter: blur(11px);
 }
 
 .timeline-section h2 {
-    color: #ff963d;
+    color: #ffad64;
     margin-top: 0;
-    font-size: 23px;
+    font-family: "Creepster", cursive;
+    font-size: 29px;
+    font-weight: 400;
 }
+
+.timeline-section > p {
+    color: #cbbbd8;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+/* =========================================
+   TIMELINE FORM
+========================================= */
 
 .timeline-form {
     display: flex;
@@ -52,85 +106,170 @@
 }
 
 .timeline-form label {
-    color: #e5ddeb;
+    color: #f0e4f8;
     font-weight: 600;
     margin-top: 8px;
+    font-size: 13px;
 }
 
 .timeline-form input,
 .timeline-form textarea {
     width: 100%;
     box-sizing: border-box;
-    padding: 12px;
-    background: #100d18;
-    border: 1px solid #493956;
-    border-radius: 7px;
-    color: #ffffff;
+    padding: 13px 14px;
+    background: rgba(12, 8, 19, .95);
+    border: 1px solid #594365;
+    border-radius: 9px;
+    color: #fff;
     font-family: "Poppins", sans-serif;
-    font-size: 14px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.timeline-form input::placeholder,
+.timeline-form textarea::placeholder {
+    color: #8f819b;
 }
 
 .timeline-form input:focus,
 .timeline-form textarea:focus {
-    outline: none;
     border-color: #ff963d;
+    box-shadow: 0 0 0 3px rgba(255, 150, 61, .12);
+}
+
+.timeline-form textarea {
+    min-height: 110px;
+    resize: vertical;
 }
 
 .timeline-form button {
     margin-top: 12px;
-    padding: 12px;
-    background: #ff963d;
-    color: #160f0a;
+    padding: 13px 18px;
+    background: linear-gradient(110deg, #ff963d, #ffb15e);
+    color: #170d20;
     border: none;
-    border-radius: 7px;
+    border-radius: 9px;
     font-weight: 700;
     font-family: "Poppins", sans-serif;
+    font-size: 14px;
     cursor: pointer;
+    box-shadow: 0 5px 18px rgba(255, 130, 40, .2);
+    transition: transform .2s, box-shadow .2s;
 }
 
-.timeline-form button:hover {
-    background: #ffad64;
+.timeline-form button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255, 130, 40, .35);
 }
+
+.timeline-form button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+.timeline-section .form-error {
+    color: #ff9999;
+    font-size: 13px;
+}
+
+/* =========================================
+   TIMELINE ENTRIES
+========================================= */
+
 .timeline-entries {
-    margin-top: 30px;
-    padding-top: 20px;
+    margin-top: 32px;
+    padding-top: 24px;
     border-top: 1px solid #493956;
 }
 
 .timeline-entries h2 {
-    color: #ff963d;
-    font-size: 23px;
+    color: #ffad64;
+    font-family: "Creepster", cursive;
+    font-size: 29px;
+    font-weight: 400;
     margin-bottom: 20px;
 }
 
 .timeline-entry {
-    background: #100d18;
+    background: rgba(15, 9, 23, .85);
     border: 1px solid #493956;
-    border-left: 4px solid #ff963d;
-    border-radius: 8px;
-    padding: 16px;
+    border-left: 4px solid #9b5de5;
+    border-radius: 11px;
+    padding: 19px;
     margin-bottom: 15px;
+    transition: border-color .2s, transform .2s;
+}
+
+.timeline-entry:hover {
+    border-color: #bd78ff;
+    transform: translateX(3px);
 }
 
 .timeline-entry h3 {
-    color: #ffffff;
-    margin: 0 0 8px;
+    color: #ffbd7e;
+    margin: 0 0 9px;
+    font-size: 16px;
 }
 
 .timeline-entry p {
-    color: #c4bdce;
+    color: #d0c4dc;
+    line-height: 1.7;
     margin-bottom: 10px;
+    font-size: 13px;
 }
 
 .timeline-entry small {
-    color: #ff963d;
+    color: #b994db;
+    font-size: 12px;
 }
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
 @media (max-width: 600px) {
+    .investigation-page {
+        padding: 30px 15px 50px;
+        background-attachment: scroll;
+    }
+
     .investigation-container h1 {
-        font-size: 32px;
+        font-size: 39px;
     }
 
     .timeline-section {
-        padding: 18px;
+        padding: 21px 16px;
+    }
+
+    .timeline-section h2,
+    .timeline-entries h2 {
+        font-size: 25px;
+    }
+
+    .timeline-entry {
+        padding: 15px;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    .timeline-form input,
+    .timeline-form textarea,
+    .timeline-form button,
+    .timeline-entry,
+    .investigation-container .back-link {
+        transition: none;
+    }
+
+    .timeline-entry:hover,
+    .timeline-form button:hover {
+        transform: none;
     }
 }

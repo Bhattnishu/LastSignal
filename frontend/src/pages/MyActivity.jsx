@@ -71,6 +71,7 @@ function MyActivity() {
             <p>Loading your reports...</p>
           ) : (
             <>
+              <RecoveryRequests />
               <section className="activity-section">
                 <h2>My Reports</h2>
 
@@ -81,58 +82,73 @@ function MyActivity() {
                 ) : (
                   <div className="activity-list">
                     {reports.map((report) => (
-                      <article
-                        className="activity-card"
+                      <details
+                        className="report-compact-card"
                         key={report.id}
                       >
-                        <div className="activity-card-header">
-                          <span
-                            className={`report-type ${report.report_type.toLowerCase()}`}
-                          >
-                            {report.report_type === "LOST"
-                              ? "Lost Item"
-                              : "Found Item"}
-                          </span>
+                        <summary>
+                          <div className="report-summary">
+                            <strong>{report.item_name}</strong>
 
-                          <span className="report-status">
-                            {report.status}
-                          </span>
+                            <div className="report-summary-meta">
+                              <span
+                                className={`report-type ${report.report_type.toLowerCase()}`}
+                              >
+                                {report.report_type === "LOST"
+                                  ? "Lost Item"
+                                  : "Found Item"}
+                              </span>
+
+                              <span className="report-status">
+                                {report.status}
+                              </span>
+                            </div>
+                          </div>
+
+                          <span className="report-arrow">⌄</span>
+                        </summary>
+
+                          
+                        <div className="report-expanded-details">
+                          <p>Category: {report.category || "Not specified"}</p>
+                          <p>
+                            Location: {report.location || "Not specified"}
+                            {report.city ? `, ${report.city}` : ""}
+                          </p>
+
+                          {report.description && <p>Description: {report.description}</p>}
+                          {report.brand && <p>Brand: {report.brand}</p>}
+                          {report.color && <p>Color: {report.color}</p>}
+
+                          <small>
+                            Submitted:{" "}
+                            {new Date(report.created_at).toLocaleDateString()}
+                          </small>
+
+                          <div className="activity-card-actions">
+                            <button
+                              className="delete-report-btn"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleDelete(report);
+                              }}
+                              disabled={deletingId === report.id}
+                              title="Delete report"
+                            >
+                              🗑️{" "}
+                              {deletingId === report.id ? "Deleting..." : "Delete"}
+                            </button>
+                          </div>
                         </div>
 
-                        <h2>{report.item_name}</h2>
-
-                        <p>Category: {report.category}</p>
-                        <p>
-                          Location: {report.location}, {report.city}
-                        </p>
-
-                        <small>
-                          Submitted:{" "}
-                          {new Date(
-                            report.created_at
-                          ).toLocaleDateString()}
-                        </small>
-
-                        <div className="activity-card-actions">
-                          <button
-                            className="delete-report-btn"
-                            onClick={() => handleDelete(report)}
-                            disabled={deletingId === report.id}
-                            title="Delete report"
-                          >
-                            🗑️{" "}
-                            {deletingId === report.id
-                              ? "Deleting..."
-                              : "Delete"}
-                          </button>
-                        </div>
-                      </article>
+                      </details>
                     ))}
                   </div>
                 )}
               </section>
 
-              <RecoveryRequests />
+              
             </>
           )}
         </div>

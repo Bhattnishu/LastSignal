@@ -16,15 +16,15 @@ Instead of simply listing lost items, LastSignal combines intelligent matching w
 
 ## Technology Stack
 
-| Area | Technologies |
-|---|---|
-| Frontend | React, JavaScript, Vite |
-| Backend | Python, Django, Django REST Framework |
-| Database | PostgreSQL |
-| Authentication | JWT (Simple JWT) |
-| AI | Google Gemini API |
-| Cloud Storage | AWS S3 |
-| Version Control | Git & GitHub |
+| Area            | Technologies                          |
+| --------------- | ------------------------------------- |
+| Frontend        | React, JavaScript, Vite               |
+| Backend         | Python, Django, Django REST Framework |
+| Database        | PostgreSQL                            |
+| Authentication  | JWT (Simple JWT)                      |
+| AI              | Google Gemini API                     |
+| Cloud Storage   | AWS S3                                |
+| Version Control | Git & GitHub                          |
 
 ## Project Structure
 

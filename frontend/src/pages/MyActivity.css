@@ -1,185 +1,305 @@
 
+/* =========================================
+   MY ACTIVITY PAGE
+========================================= */
+
 .my-activity-page {
-  min-height: 100vh;
-  padding: 50px 20px;
-  background: #100d18;
-  color: #f8f5ff;
-  font-family: "Poppins", sans-serif;
+    min-height: 75vh;
+    padding: 45px 20px 80px;
+    color: #f5efff;
+    font-family: "Poppins", sans-serif;
+    background:
+      linear-gradient(
+          180deg,
+          rgba(10, 5, 20, 0.45),
+          rgba(10, 5, 20, 0.72)
+      ),
+      url("/images/haunted-forest.png") center / cover no-repeat fixed;
 }
 
 .my-activity-container {
-  max-width: 850px;
-  margin: 0 auto;
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
 }
 
-.my-activity-container h1 {
-  color: #ff963d;
-  margin: 24px 0 10px;
+.my-activity-container > .back-link {
+    display: inline-block;
+    margin-bottom: 22px;
+    color: #ffad64;
+    font-size: 14px;
+    transition: color .2s;
+}
+
+.my-activity-container > .back-link:hover {
+    color: #fff;
+}
+
+.my-activity-container > h1 {
+    margin: 0;
+    color: #ff963d;
+    font-family: "Creepster", cursive;
+    font-size: 52px;
+    font-weight: 400;
+    text-shadow: 0 0 18px rgba(255, 150, 61, .3);
 }
 
 .my-activity-container > p {
-  color: #b8adbf;
+    margin: 8px 0 35px;
+    color: #c4b5d0;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* =========================================
+   ACTIVITY SECTIONS
+========================================= */
+
+.activity-section {
+    margin-top: 30px;
+    padding: 25px;
+    background: rgba(28, 18, 40, .88);
+    border: 1px solid #493456;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+.activity-section h2 {
+    margin: 0 0 22px;
+    padding-bottom: 14px;
+    color: #ffad64;
+    font-family: "Creepster", cursive;
+    font-size: 30px;
+    font-weight: 400;
+    border-bottom: 1px solid #493456;
 }
 
 .activity-list {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
-.activity-card {
-  padding: 22px;
-  background: #1c1726;
-  border: 1px solid #3a2b48;
-  border-radius: 14px;
+/* =========================================
+   REPORT CARDS
+========================================= */
+
+.report-compact-card {
+    padding: 18px 20px;
+    background: linear-gradient(145deg, #251a32, #191121);
+    border: 1px solid #493456;
+    border-radius: 13px;
+    transition: border-color .25s, box-shadow .25s;
 }
 
-.activity-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
+.report-compact-card:hover {
+    border-color: rgba(255, 150, 61, .65);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+}
+
+.report-compact-card summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.report-compact-card summary::-webkit-details-marker {
+    display: none;
+}
+
+.report-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.report-summary > strong {
+    color: #ffad64;
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+.report-summary-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .report-type,
 .report-status {
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+    display: inline-block;
+    padding: 5px 11px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
 }
 
 .report-type.lost {
-  background: #493024;
-  color: #ffad65;
+    color: #d9b8ff;
+    background: rgba(155, 93, 229, .18);
+    border: 1px solid rgba(155, 93, 229, .4);
 }
 
 .report-type.found {
-  background: #183b30;
-  color: #7fe0b0;
+    color: #ffc184;
+    background: rgba(255, 150, 61, .15);
+    border: 1px solid rgba(255, 150, 61, .4);
 }
 
 .report-status {
-  background: #30283b;
-  color: #d5ccdc;
+    color: #d8cce2;
+    background: #342641;
+    border: 1px solid #594365;
 }
 
-.activity-card h2 {
-  color: #f8f5ff;
-  margin-bottom: 12px;
+.report-arrow {
+    flex-shrink: 0;
+    color: #ff963d;
+    font-size: 24px;
+    transition: transform .25s ease;
 }
 
-.activity-card p {
-  color: #c4bacd;
-  margin-bottom: 8px;
+.report-compact-card[open] .report-arrow {
+    transform: rotate(180deg);
 }
 
-.activity-card small {
-  display: block;
-  color: #94899e;
-  margin-top: 14px;
+.report-expanded-details {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid #493456;
+    animation: reportExpand .25s ease;
 }
 
-.activity-empty {
-  margin-top: 30px;
-  padding: 35px 20px;
-  text-align: center;
-  background: #1c1726;
-  border: 1px solid #3a2b48;
-  border-radius: 14px;
+.report-expanded-details p {
+    margin: 0 0 11px;
+    color: #d0c4dc;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
 }
 
-.activity-empty h2 {
-  color: #ff963d;
-  margin-bottom: 10px;
+.report-expanded-details small {
+    color: #a99bb5;
+    font-size: 12px;
 }
 
-.activity-empty p {
-  color: #b8adbf;
+@keyframes reportExpand {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Activity card actions */
+/* =========================================
+   BUTTONS
+========================================= */
+
 .activity-card-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
 }
 
 .delete-report-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: transparent;
-  border: 1px solid #ef4444;
-  border-radius: 7px;
-  color: #f87171;
-  font-family: "Poppins", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
+    padding: 9px 16px;
+    color: #ffb2b2;
+    background: rgba(160, 40, 55, .15);
+    border: 1px solid rgba(220, 75, 85, .5);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: .2s ease;
 }
 
-.delete-report-btn:hover {
-  background: #ef4444;
-  color: white;
+.delete-report-btn:hover:not(:disabled) {
+    color: white;
+    background: #a83242;
+    border-color: #e45c6b;
 }
 
 .delete-report-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.activity-section {
-  margin-top: 40px;
+    opacity: .5;
+    cursor: not-allowed;
 }
 
-.activity-section > h2 {
-  margin-bottom: 18px;
+/* =========================================
+   EMPTY / LOADING / ERROR
+========================================= */
+
+.activity-empty {
+    padding: 30px 20px;
+    text-align: center;
+    background: rgba(16, 11, 24, .65);
+    border: 1px dashed #594365;
+    border-radius: 12px;
 }
 
-.recovery-response-form,
-.recovery-response-details {
-  margin-top: 18px;
-  padding: 18px;
-  border: 1px solid #2b4145;
-  border-radius: 10px;
-  background: #101b20;
+.activity-empty p,
+.my-activity-container > p {
+    color: #c4b5d0;
 }
 
-.recovery-response-form label {
-  display: block;
-  margin: 12px 0 6px;
+.my-activity-container .form-error {
+    padding: 12px 16px;
+    color: #ffaaaa;
+    background: rgba(160, 40, 55, .15);
+    border: 1px solid rgba(220, 75, 85, .4);
+    border-radius: 9px;
 }
 
-.recovery-response-form textarea,
-.recovery-response-form input,
-.recovery-response-form select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #40545a;
-  border-radius: 6px;
-  background: #080f13;
-  color: white;
-  font: inherit;
+/* =========================================
+   RECOVERY REQUESTS
+========================================= */
+
+.my-activity-container details:not(.report-compact-card) {
+    color: #f5efff;
 }
 
-.recovery-response-form button {
-  padding: 9px 15px;
-  border: 0;
-  border-radius: 6px;
-  cursor: pointer;
+.my-activity-container details:not(.report-compact-card) summary {
+    cursor: pointer;
 }
+
+/* =========================================
+   RESPONSIVE
+========================================= */
 
 @media (max-width: 600px) {
-  .my-activity-page {
-    padding: 30px 16px;
-  }
+    .my-activity-page {
+        padding: 30px 14px 55px;
+    }
 
-  .activity-card {
-    padding: 16px;
-  }
+    .my-activity-container > h1 {
+        font-size: 42px;
+    }
+
+    .activity-section {
+        padding: 17px 13px;
+        margin-top: 22px;
+    }
+
+    .activity-section h2 {
+        font-size: 26px;
+    }
+
+    .report-compact-card {
+        padding: 15px;
+    }
+
+    .report-summary > strong {
+        font-size: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .report-compact-card,
+    .report-arrow {
+        transition: none;
+    }
+
+    .report-expanded-details {
+        animation: none;
+    }
 }
