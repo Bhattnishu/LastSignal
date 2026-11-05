@@ -1,8 +1,12 @@
-
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+
+import MatchCard from "../components/LostResults/MatchCard";
+import RecoveryRequestModal from "../components/LostResults/RecoveryRequestModal";
+
 import { apiRequest } from "../services/api";
 import "./LostResults.css";
 
@@ -12,23 +16,23 @@ function LostResults() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState("");
   const [selectedMatch, setSelectedMatch] = useState(null);
+
   const [message, setMessage] = useState("");
   const [contactMethod, setContactMethod] = useState("PHONE");
   const [contactValue, setContactValue] = useState("");
+
   const [sending, setSending] = useState(false);
   const [sentRequests, setSentRequests] = useState({});
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // Load possible matches.
         const matchData = await apiRequest(
           `/items/my-reports/${id}/matches/`
         );
 
         setResults(matchData);
 
-        // Load recovery requests already sent by this user.
         const requestData = await apiRequest(
           "/items/recovery-requests/sent/"
         );
@@ -37,7 +41,6 @@ function LostResults() {
           ? requestData
           : requestData.results || [];
 
-        // Keep only requests for this lost report.
         const requestMap = {};
 
         requests.forEach((request) => {
@@ -48,7 +51,6 @@ function LostResults() {
 
         setSentRequests(requestMap);
 
-        // Mark possible-match notifications as read.
         try {
           const notificationData = await apiRequest(
             "/items/notifications/"
@@ -80,10 +82,7 @@ function LostResults() {
             );
           }
         } catch (notificationError) {
-          console.error(
-            "Could not update notifications:",
-            notificationError
-          );
+          console.error("Could not update notifications:", notificationError);
         }
       } catch (err) {
         setError(err.message);
@@ -119,7 +118,6 @@ function LostResults() {
         }
       );
 
-      // Save the request status in React state.
       setSentRequests((previous) => ({
         ...previous,
         [selectedMatch.report.id]: response.status || "PENDING",
@@ -142,6 +140,19 @@ function LostResults() {
     return "Request Sent";
   }
 
+  function openContactModal(match) {
+    setSelectedMatch(match);
+    setMessage("");
+    setContactValue("");
+    setContactMethod("PHONE");
+    setError("");
+  }
+
+  function closeContactModal() {
+    setSelectedMatch(null);
+    setError("");
+  }
+
   return (
     <>
       <Navbar />
@@ -155,7 +166,9 @@ function LostResults() {
           <h1>Lost Item Search Results</h1>
           <p>Here are the possible matches we found for your report.</p>
 
-          {error && <p className="form-error">{error}</p>}
+          {error && !selectedMatch && (
+            <p className="form-error">{error}</p>
+          )}
 
           {!results && !error && (
             <p>Searching for possible matches...</p>
@@ -168,59 +181,17 @@ function LostResults() {
             </p>
           )}
 
-          {results?.matches?.map((match) => {
-            const requestStatus = sentRequests[match.report.id];
-
-            return (
-              <div className="match-card" key={match.report.id}>
-                <h2>{match.report.item_name}</h2>
-
-                {match.report.image ? (
-                  <img
-                    src={match.report.image}
-                    alt={match.report.item_name}
-                    className="matched-item-image"
-                  />
-                ) : (
-                  <p>No image available for this item.</p>
-                )}
-
-                <p>Category: {match.report.category}</p>
-                <p>Brand: {match.report.brand || "Not specified"}</p>
-                <p>Color: {match.report.color || "Not specified"}</p>
-                <p>
-                  Location: {match.report.location}, {match.report.city}
-                </p>
-                <p>Match score: {match.match_score}</p>
-
-                <p>Why it may match:</p>
-                <ul>
-                  {match.match_reasons.map((reason, index) => (
-                    <li key={index}>{reason}</li>
-                  ))}
-                </ul>
-
-                {requestStatus ? (
-                  <p className="recovery-success">
-                    {getRequestLabel(requestStatus)}
-                  </p>
-                ) : (
-                  <button
-                    className="recovery-request-btn"
-                    onClick={() => {
-                      setSelectedMatch(match);
-                      setMessage("");
-                      setContactValue("");
-                      setContactMethod("PHONE");
-                      setError("");
-                    }}
-                  >
-                    Contact Finder
-                  </button>
-                )}
-              </div>
-            );
-          })}
+          <div className="matches-list">
+            {results?.matches?.map((match) => (
+              <MatchCard
+                key={match.report.id}
+                match={match}
+                requestStatus={sentRequests[match.report.id]}
+                getRequestLabel={getRequestLabel}
+                onContact={openContactModal}
+              />
+            ))}
+          </div>
 
           <Link
             to={`/investigation/${id}`}
@@ -231,74 +202,19 @@ function LostResults() {
         </div>
       </main>
 
-      {selectedMatch && (
-        <div className="recovery-modal-overlay">
-          <div className="recovery-modal">
-            <h2>Contact Finder</h2>
-
-            <p>
-              Explain why you believe this{" "}
-              {selectedMatch.report.item_name} belongs to you and
-              share your contact details.
-            </p>
-
-            <form onSubmit={handleRecoveryRequest}>
-              <textarea
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
-                placeholder="Explain why this item belongs to you..."
-                rows={4}
-                required
-              />
-
-              <select
-                value={contactMethod}
-                onChange={(event) => setContactMethod(event.target.value)}
-              >
-                <option value="PHONE">Phone Number</option>
-                <option value="EMAIL">Email Address</option>
-              </select>
-
-              <input
-                type={contactMethod === "EMAIL" ? "email" : "tel"}
-                value={contactValue}
-                onChange={(event) => setContactValue(event.target.value)}
-                placeholder={
-                  contactMethod === "EMAIL"
-                    ? "Your email address"
-                    : "Your phone number"
-                }
-                required
-              />
-
-              {error && <p className="form-error">{error}</p>}
-
-              <div className="recovery-modal-actions">
-                <button
-                  type="button"
-                  className="recovery-cancel-btn"
-                  onClick={() => {
-                    setSelectedMatch(null);
-                    setError("");
-                  }}
-                >
-                  Cancel
-                </button>
-
-                <button
-                  type="submit"
-                  className="recovery-request-btn"
-                  disabled={
-                    sending || !message.trim() || !contactValue.trim()
-                  }
-                >
-                  {sending ? "Sending..." : "Send Details"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      <RecoveryRequestModal
+        selectedMatch={selectedMatch}
+        message={message}
+        setMessage={setMessage}
+        contactMethod={contactMethod}
+        setContactMethod={setContactMethod}
+        contactValue={contactValue}
+        setContactValue={setContactValue}
+        sending={sending}
+        error={error}
+        onClose={closeContactModal}
+        onSubmit={handleRecoveryRequest}
+      />
 
       <Footer />
     </>
