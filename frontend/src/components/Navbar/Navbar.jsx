@@ -68,8 +68,10 @@ function Navbar() {
   }, []);
 
   async function handleNotificationClick(notification) {
-    try {
-      if (!notification.is_read) {
+    setShowNotifications(false);
+
+    if (!notification.is_read) {
+      try {
         await apiRequest(
           `/items/notifications/${notification.id}/read/`,
           { method: "PATCH" }
@@ -82,17 +84,15 @@ function Navbar() {
               : item
           )
         );
+      } catch (error) {
+        console.error("Could not mark notification as read:", error.message);
       }
+    }
 
-      setShowNotifications(false);
-
-      if (notification.title === "New Recovery Request!") {
-        navigate("/my-activity");
-      } else {
-        navigate(`/report/lost/${notification.lost_report_id}/results`);
-      }
-    } catch (error) {
-      console.error("Notification error:", error.message);
+    if (notification.title === "New Recovery Request!") {
+      navigate("/my-activity");
+    } else {
+      navigate(`/report/lost/${notification.lost_report_id}/results`);
     }
   }
 

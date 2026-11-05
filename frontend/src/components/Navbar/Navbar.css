@@ -9,6 +9,7 @@
   gap: 20px;
   position: relative;
   isolation: isolate;
+  z-index: 1000;
 
   background: linear-gradient(
     90deg,
@@ -204,7 +205,7 @@
   border: 1px solid #80509c;
   border-radius: 12px;
   padding: 14px;
-  z-index: 1000;
+  z-index: 1001;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
   animation: dropdownEnter 0.2s ease;
 }
